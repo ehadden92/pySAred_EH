@@ -1,0 +1,366 @@
+pySAred_EH v1.0.1 - Windows Release Notes
+=========================================
+
+Document purpose
+----------------
+This document summarizes the main changes and additions introduced to pySAred relative to previously published online versions by the original author, Dr. Alexey Klechikov, with his written approval.
+
+Audience
+--------
+This summary is a changelog / technical-update intended for maintainers and contributors of pySAred data reduction software.
+
+Comparison baseline
+-------------------
+The changes summarized here are intended to document upgrades relative to the previous public pySAred versions available online through the GitHub repository, including the public V1.5.x code line and the latest public release series.
+
+The update should therefore be read as a maintenance and feature-summary for a newer development version rather than as a full rewrite of pySAred.
+
+Scope
+-----
+The work focused on:
+- modernizing and restructuring the GUI without intentionally changing the core scientific workflow,
+- improving maintainability and scalability of the Qt Widgets interface,
+- fixing selected behavioral regressions and numerical robustness issues,
+- adding detector-image and monitor/time usability improvements,
+- extending overillumination correction beyond uniform rectangular/square sample shapes,
+- improving small-screen usability by making the main GUI content scrollable,
+- improving consistency between Single File Mode (SFM) and batch reduction,
+- correcting SFM behavior for sample-curvature and background-subtraction use.
+
+Avoided
+-------
+We avoided the following:
+- replacing the scientific stack (PyQtGraph / Matplotlib / HDF5 workflow),
+- rewriting the reduction pipeline from scratch,
+- changing the conceptual tab/workflow structure used by existing users,
+- replacing the original rectangular/square overillumination correction behavior,
+- changing the batch-mode overillumination / projected-FWHM workflow.
+
+High-level outcome
+------------------
+The application remains a PyQt5 / Qt Widgets desktop tool, but it now has:
+- a more scalable layout-managed GUI,
+- improved maintainability of the window and tab structure,
+- safer handling of invalid numerical factors,
+- a corrected reversible sample-curvature workflow,
+- a detector-image cursor/slider for faster browsing,
+- a less crowded two-row Detector Image control header,
+- scrollable main-window content for small laptop screens,
+- Monitors / Time preview and export support,
+- sample-shape-aware overillumination correction for non-uniform symmetric shapes,
+- improved SFM consistency with batch-mode resolution handling,
+- corrected SFM background-subtraction behavior when curvature correction is used.
+
+Main updates
+------------
+
+1. GUI architecture refactor
+----------------------------
+The original interface relied heavily on fixed widget geometry and manual resize-time repositioning. The updated code introduced an in-place layout
+refactor that keeps the existing workflow recognizable while replacing large parts of the geometry-driven structure with layout-managed Qt Widgets.
+
+Key characteristics of the refactor:
+- preserved the existing tab/workflow model,
+- preserved core widget semantics and most signal-driven behavior,
+- reduced dependence on manual resize-event layout logic,
+- improved window scaling and readability.
+
+Main areas modernized:
+- left-side data/import panel,
+- middle reductions/settings/export panel,
+- right-side SFM panel,
+- detector image tab,
+- reflectivity preview tab,
+- monitors/time tab,
+- 2D map tab.
+
+2. Layout-managed detector / reflectivity / 2D-map views
+--------------------------------------------------------
+The SFM tabs were restructured so that controls and plots are arranged through Qt layouts rather than fragile fixed positioning.
+
+Effects:
+- better responsiveness when resizing the application window,
+- cleaner grouping of controls,
+- easier future extension (for example additional ROI or correction controls),
+- lower maintenance burden compared to manual geometry updates.
+
+3. Added Monitors / Time preview and export workflow
+----------------------------------------------------
+A dedicated Monitors / Time workflow was integrated into the GUI, including:
+- tabular preview of monitor/time-related values,
+- export of the preview table to a .dat file,
+- plot controls for selected columns,
+- copy/selection helpers,
+- Matplotlib-backed plotting support for this tab.
+
+This improves observability of normalization-related data and reduces the need for manual external inspection.
+
+4. Sample-shape-aware overillumination correction
+------------------------------------------------
+The overillumination correction was extended beyond the previous uniform
+segment / rectangular / square sample assumption.
+
+Previous behavior:
+- the correction effectively treated the sample as having a constant length
+  along the projected beam direction,
+- this was directly suitable for a segment, rectangle, or square with uniform
+  length across the transverse direction.
+
+Updated behavior:
+- the original one-dimensional overillumination correction is retained as the
+  core beam-capture kernel,
+- additional sample-shape options allow this kernel to be averaged over local
+  chord lengths for finite symmetric two-dimensional sample shapes,
+- the implemented shape choices include:
+  - Segment / Rectangle / Square,
+  - Disk / Ellipse,
+  - Square rotated by 45 degrees / Diamond.
+
+Implementation note:
+- the rectangular/square case reduces to the original correction behavior,
+- non-uniform symmetric shapes are handled by numerical averaging over the
+  corresponding local chord-length function,
+- this keeps the extension conservative and avoids replacing the original
+  PySAred correction logic.
+
+Validation note:
+- independent validation tests have been performed for the generalized
+  overillumination correction,
+- the validation included comparison with analytical results where available,
+  direct numerical benchmarks based on the original beam profile, and low-angle
+  geometric-limit checks,
+- Documentation of the detailed derivation and validation tests, including a validation notebook
+  suitable for checks and exercises, will be later made available separately (probably as
+  a supporting material of a publication).
+
+Impact:
+- overillumination correction can now account for selected non-rectangular
+  symmetric sample shapes,
+- the original uniform-sample workflow remains available and is preserved as the
+  reference case.
+
+5. Numerical validation and safety hardening
+-------------------------------------------
+Additional safeguards were introduced to prevent invalid numeric input from
+propagating into the reflectivity preview and export logic.
+
+Main protections added:
+- validation of Scale Factor as a finite positive value,
+- validation of Direct Beam Attenuator Factor as a finite positive value,
+- filtering/skipping of non-finite values before plotting/export where needed.
+
+Why this was necessary:
+- invalid or zero factors could generate inf/nan values,
+- those values then propagated into pyqtgraph error bars and scatter rendering,
+  causing warnings and unstable preview behavior.
+
+6. Reflectivity-preview robustness improvements
+-----------------------------------------------
+The reflectivity preview path was hardened so that invalid points are not passed
+through blindly to plotting routines.
+
+Practical effect:
+- fewer pyqtgraph runtime warnings,
+- more stable preview rendering,
+- safer behavior when user-entered correction factors are invalid or produce
+  non-finite results.
+
+7. Sample-curvature correction reversibility fix
+------------------------------------------------
+A significant behavioral bug affecting sample-curvature correction was fixed.
+
+Problem:
+- curvature corrections could become effectively cumulative,
+- resetting curvature back to 0 did not reliably restore the original state.
+
+Root cause:
+- the newer code path did not always rebuild the Y-integrated detector data from
+  the raw detector images before reapplying curvature.
+
+Fix:
+- the affected workflow now rebuilds the relevant detector-derived arrays from
+  the raw detector data when curvature/ROI state changes,
+- curvature is therefore applied from a clean baseline,
+- setting curvature back to 0 now restores the uncorrected baseline state.
+
+Impact:
+- the sample-curvature workflow is now reversible again.
+
+8. Detector-image navigation enhancement
+----------------------------------------
+A new navigation control was added to the Detector Image tab.
+
+Changes:
+- the Incident angle selector was repositioned to come after the Colors control,
+- a cursor/slider-based detector-image navigator was added in front of the
+  incident-angle selector,
+- the slider and the existing incident-angle combobox are synchronized,
+- the combobox remains the underlying angle reference source of truth.
+
+Impact:
+- faster browsing through detector images,
+- minimal risk change because the enhancement reuses the existing angle-index
+  selection logic rather than introducing a separate image-selection model.
+
+9. SFM curvature correction now also covers the background ROI
+--------------------------------------------------------------
+The SFM sample-curvature workflow was updated so that optional curvature correction is applied consistently to both the signal ROI and the background ROI
+when background subtraction is enabled.
+
+Previous behavior:
+- curvature correction was applied to the signal ROI,
+- if background subtraction was enabled, the background ROI could still be taken
+  from the uncorrected detector-derived array.
+
+Updated behavior:
+- when SFM curvature correction is enabled, the same correction is applied to
+  the signal ROI and to the background ROI before subtraction,
+- the background-subtracted SFM intensity is therefore based on consistently
+  corrected signal and background regions.
+
+Operational note:
+- signal and background ROIs should be kept non-overlapping, because overlapping ROI windows may cause the overlapping region to be corrected more than once.
+
+Impact:
+- improves consistency and correctness of SFM background subtraction when sample curvature correction is used.
+
+10. SFM projected-FWHM / resolution behavior aligned with batch mode
+-------------------------------------------------------------------
+SFM resolution handling was reviewed and made consistent with the batch workflow.
+
+Previous SFM behavior:
+- when overillumination correction was disabled, the projected FWHM used in the
+  resolution calculation was replaced by the sample-slit opening value.
+
+Batch-mode behavior:
+- projected FWHM was computed even when the intensity overillumination correction
+  itself was disabled,
+- only the intensity correction factor was disabled.
+
+Updated SFM behavior:
+- SFM now computes the projected FWHM regardless of whether the overillumination
+  intensity correction checkbox is enabled,
+- when overillumination correction is disabled, only the intensity correction
+  factor is set to 1,
+- the projected FWHM remains available for the resolution calculation.
+
+Impact:
+- SFM and batch mode now use the same projected-FWHM logic for resolution
+  calculation,
+- the batch workflow was intentionally preserved as the reference behavior.
+
+11. Faster SFM background-subtraction toggling when curvature is zero
+---------------------------------------------------------------------
+A small performance optimization was added to reduce unnecessary recalculation
+when toggling background subtraction in SFM.
+
+Problem:
+- adding background ROI state to the curvature-cache key made the workflow safe
+  for non-zero curvature,
+- however, when sample curvature was 0, toggling "Subtract background" could
+  still trigger an unnecessary rebuild of the Y-integrated detector arrays.
+
+Fix:
+- when curvature is 0, the curvature-cache key no longer includes the background
+  checkbox state or background ROI coordinates,
+- when curvature is non-zero, the cache key still includes the background state
+  and background ROI so that the corrected background ROI remains valid.
+
+Impact:
+- toggling "Subtract background" is faster in the common zero-curvature case,
+- the non-zero curvature behavior remains correct and conservative.
+
+
+12. Small-screen GUI accessibility improvement
+---------------------------------------------
+The main GUI container was made more suitable for small laptop screens.
+
+Problem:
+- the refactored interface was still designed around a relatively large working
+  area,
+- on small screens, some controls could become hidden or unreachable.
+
+Fix:
+- the main window minimum size was reduced,
+- the full central GUI content was placed inside a scrollable container,
+- the internal GUI workspace remains large enough to preserve the intended
+  layout, while scrollbars allow users to reach all controls on smaller screens,
+- splitter side panels can be collapsed to give more space to the active work
+  area.
+
+Impact:
+- users on small screens can access the full interface without changing the
+  scientific workflow or reduction logic.
+
+13. Detector Image tab control-row cleanup
+------------------------------------------
+The Detector Image tab header was adjusted to reduce crowding after adding the
+cursor/slider navigation control.
+
+Problem:
+- the Polarisation, Colors, Cursor, Incident angle selector, and Integrated ROI
+  button were all placed on a single row,
+- this became crowded on small or narrow screens.
+
+Fix:
+- the Detector Image tab controls were split into two rows,
+- the cursor slider and Incident angle selector were kept together as a linked
+  navigation row,
+- the Polarisation, Colors, and Integrated ROI controls remain on the first row.
+
+Impact:
+- the detector-image navigation controls are easier to read and use,
+- the slider/combobox synchronization behavior remains unchanged.
+
+Compatibility and behavior preservation
+--------------------------------------
+The update set was intentionally conservative in the following ways:
+- PyQt5 was retained,
+- the scientific reduction workflow was preserved as much as possible,
+- the existing tab structure remained recognizable,
+- the plotting/data stack (PyQtGraph / Matplotlib / HDF5-based reading) was
+  preserved,
+- the original uniform rectangular/square overillumination correction remains
+  available as the reference behavior,
+- additions and fixes were implemented with minimal disruption to the original
+  logic paths,
+- batch-mode projected-FWHM behavior was kept unchanged and used as the reference
+  for the SFM update.
+
+Repository-facing summary
+-------------------------
+From a GitHub maintenance perspective, this update series can be described as:
+
+- Refactor:
+  Convert major GUI regions from fixed/manual geometry management to
+  layout-managed Qt Widgets.
+- Feature:
+  Add Monitors / Time preview/export support.
+- Feature:
+  Extend overillumination correction to selected non-rectangular symmetric
+  sample shapes using a sample-shape-aware chord-averaging approach.
+- Feature:
+  Add detector-image slider/cursor navigation synchronized with angle selection.
+- Fix:
+  Restore reversibility of sample-curvature correction.
+- Fix:
+  Apply SFM curvature correction to the background ROI before subtraction when
+  background subtraction is enabled.
+- Fix:
+  Align SFM projected-FWHM usage in resolution calculations with the existing
+  batch-mode behavior.
+- Fix:
+  Prevent invalid numeric correction factors from producing unstable plotting
+  behavior.
+- Improvement:
+  Avoid unnecessary detector-array rebuilds when toggling SFM background
+  subtraction while curvature is zero.
+- Improvement:
+  Add scrollable main-window content and collapsible splitter panels to improve
+  usability on small screens.
+- Improvement:
+  Split the Detector Image tab header into cleaner control rows to reduce
+  crowding around the cursor and incident-angle controls.
+- Improvement:
+  Increase GUI scalability, readability, and maintainability while preserving
+  the existing workflow model.

@@ -1,0 +1,25 @@
+# Build outputs
+build/
+dist/
+dist_onefile/
+*.spec
+version_info.txt
+
+# Local / archived copies
+archived_versions/
+2026_05_08_pySAred_EH_v101.py
+
+# Generated reduction/test outputs
+*.dat
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
