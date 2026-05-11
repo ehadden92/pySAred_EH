@@ -73,17 +73,11 @@ For the Windows executable, check SHA256:
 `15c2a0d13c555bb713cf875e563ebfd036f0b08e92d0bde2cc4b915440ed917e`
 
 
-To verify the downloaded executable on Windows:
-
-`certutil -hashfile pySAred_EH_v1.0.1.exe SHA256`
-
-
-The result should match the SHA256 hash above.
-
+The result must match the SHA256 hash above. 
+Otherwise, make sure you download the application from the above repisotory or a trusted provider.
 
 
 \## Rights and permissions
-
 
 See:
 
