@@ -48,7 +48,7 @@ Main highlights include:
 
 \- improved small-screen usability,
 
-\- Monitors / Time preview and export,
+\- Monitors / Time / slits preview and export,
 
 \- detector-image cursor/slider navigation,
 
