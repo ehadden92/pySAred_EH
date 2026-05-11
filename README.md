@@ -14,7 +14,7 @@ Original pySAred author:
 
 \- Dr. Alexey Klechikov
 
-\- Original repository: https://github.com/Alexey-Klechikov/pySAred
+\- Original (previous) repository: https://github.com/Alexey-Klechikov/pySAred
 
 
 
