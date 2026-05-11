@@ -19,6 +19,7 @@ Scope
 -----
 The work focused on:
 - modernizing and restructuring the GUI without intentionally changing the core scientific workflow,
+- extending to support data generated at MiniAdam instrument,
 - extending overillumination correction beyond uniform rectangular/square sample shapes,
 - improving consistency between Single File Mode (SFM) and batch reduction,
 - correcting SFM behavior for sample-curvature and background-subtraction use.
