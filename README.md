@@ -1,4 +1,4 @@
-\# pySAred\_EH\_v1.0.1
+\# pySAred_EH_v1.0.1
 
 
 
@@ -22,7 +22,7 @@ Extended version:
 
 \- Dr. Elhoucine Hadden
 
-\- New repository: https://github.com/ehadden92/pySAred\_EH
+\- New repository: https://github.com/ehadden92/pySAred_EH
 
 
 
@@ -38,7 +38,7 @@ A detailed update summary is available here:
 
 
 
-`docs/pySAred\_EH\_v1.0.1\_update\_summary.txt`
+`docs/pySAred_EH_v1.0.1_update_summary.txt`
 
 
 
@@ -72,7 +72,7 @@ The Windows executable is available from the GitHub Releases page:
 
 
 
-`pySAred\_EH\_v1.0.1.exe`
+`pySAred_EH_v1.0.1.exe`
 
 
 
@@ -88,7 +88,7 @@ To verify the downloaded executable on Windows:
 
 
 
-`certutil -hashfile pySAred\_EH\_v1.0.1.exe SHA256`
+`certutil -hashfile pySAred_EH_v1.0.1.exe SHA256`
 
 
 
@@ -104,7 +104,7 @@ The Windows executable was:
 
 
 
-\- built on Windows from a clean conda environment named `pysared\_build\_101`,
+\- built on Windows from a clean conda environment,
 
 \- packaged with PyInstaller using `--noupx`,
 
@@ -124,7 +124,7 @@ See:
 
 \- `NOTICE.md`
 
-\- `RIGHTS\_AND\_PERMISSIONS.md`
+\- `RIGHTS_AND_PERMISSIONS.md`
 
 
 
