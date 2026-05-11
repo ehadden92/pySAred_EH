@@ -9,20 +9,21 @@ pySAred was originally authored by Dr. Alexey Klechikov.
 This repository contains an extended version prepared and maintained by Dr. Elhoucine Hadden, based on written permission from the original author.
 
 
+Original pySAred author:
 
-Original author credit:
+- Dr. Alexey Klechikov
 
-\- Dr. Alexey Klechikov
-
-\- Original pySAred project: https://github.com/Alexey-Klechikov/pySAred
-
+- Original (previous) repository: https://github.com/Alexey-Klechikov/pySAred
 
 
 Extended version:
 
-\- Maintainer: Dr. Elhoucine Hadden
+- Dr. Elhoucine Hadden
 
-\- Release: pySAred\_EH\_v1.0.1
+- New repository: https://github.com/ehadden92/pySAred_EH
+
+This extended version is published with written permission from the original author. See NOTICE.md and RIGHTS_AND_PERMISSIONS.md.
+
 
 
 
