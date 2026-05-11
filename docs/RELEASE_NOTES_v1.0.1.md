@@ -63,7 +63,8 @@ To verify after downloading on Windows:
 The output should match the SHA256 hash above.
 
 
-No macOS application package is provided yet. The alternative for macOS users is to run directly from the source code.
+No macOS application package is provided yet. 
+The current alternative for macOS or Linux users is to run directly from the source code (detailed instructions provided).
 
 
 \## Build notes
