@@ -21,6 +21,8 @@ This extended version is published based on written permission from the original
 
 \## Main update highlights
 
+\- extending to support data generated at MiniAdam instrument,
+
 \- Extended overillumination correction to selected non-rectangular symmetric sample shapes.
 
 \- Restored reversibility of sample-curvature correction.
