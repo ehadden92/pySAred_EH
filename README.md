@@ -61,7 +61,7 @@ This repository provides:
 - the Python source code: `pySAred_EH_v1.0.1.py`;
 - a Windows executable: `pySAred_EH_v1.0.1.exe`, available from the GitHub Releases page.
 
-No macOS application package is provided yet.
+No macOS application package is provided yet. The current alternative for macOS or Linux users is to run directly from the source code (detailed instructions provided).
 
 For detailed instructions on downloading the Windows executable, handling possible Microsoft Edge / SmartScreen warnings, verifying the SHA256 checksum, and running pySAred from the Python source code, see:
 
