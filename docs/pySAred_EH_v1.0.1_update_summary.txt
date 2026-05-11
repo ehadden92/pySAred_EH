@@ -19,13 +19,13 @@ Scope
 -----
 The work focused on:
 - modernizing and restructuring the GUI without intentionally changing the core scientific workflow,
-- improving maintainability and scalability of the Qt Widgets interface,
-- fixing selected behavioral regressions and numerical robustness issues,
-- adding detector-image and monitor/time usability improvements,
 - extending overillumination correction beyond uniform rectangular/square sample shapes,
-- improving small-screen usability by making the main GUI content scrollable,
 - improving consistency between Single File Mode (SFM) and batch reduction,
 - correcting SFM behavior for sample-curvature and background-subtraction use.
+- improving maintainability and scalability of the Qt Widgets interface,
+- fixing selected behavioral regressions and numerical robustness issues,
+- adding detector-image and monitor/time/slits usability improvements,
+- improving small-screen usability by making the main GUI content scrollable,
 
 Avoided
 -------
