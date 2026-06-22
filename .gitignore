@@ -5,6 +5,14 @@ dist_onefile/
 *.spec
 version_info.txt
 
+# Release packages / binaries
+*.zip
+*.exe
+
+# Local build metadata
+build_environment_*.txt
+build_info_*.txt
+
 # Local / archived copies
 archived_versions/
 2026_05_08_pySAred_EH_v101.py
