@@ -94,7 +94,7 @@ The SHA256 checksum for the `v1.0.1` Windows executable is:
 
 The SHA256 checksum for the `v1.1.0` Windows ZIP release asset is:
 
-`4D1D381C962684B6A037BA0B6E6A50CD7CFFD975157D3AE95F8FE8B2FADFD95E`
+`4AFD609959D9DAA0699FE037C89440A61C9B9B2CF8A5FE330BCC6ACF40E5DE45`
 
 Do not run a downloaded executable or ZIP file if its checksum does not match the value published in the official release.
 
