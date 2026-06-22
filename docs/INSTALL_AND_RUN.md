@@ -85,7 +85,7 @@ For `v1.1.0`, verify the downloaded ZIP file:
 
 The expected SHA256 checksum should be taken is:
 
-`4D1D381C962684B6A037BA0B6E6A50CD7CFFD975157D3AE95F8FE8B2FADFD95E`
+`4AFD609959D9DAA0699FE037C89440A61C9B9B2CF8A5FE330BCC6ACF40E5DE45`
 
 To verify the ZIP on Windows, open Command Prompt or PowerShell in the download folder and run:
 
