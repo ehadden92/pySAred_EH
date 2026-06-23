@@ -1,3 +1,12 @@
+# Runtime dependencies for pySAred_EH v1.1.0
+#
+# Install with:
+#   pip install -r requirements.txt
+#
+# These packages are required when running pySAred_EH from source.
+# They are not needed by Windows users who download the pre-built executable
+# from the GitHub Releases page.
+
 PyQt5
 numpy
 scipy
