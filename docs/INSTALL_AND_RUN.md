@@ -24,7 +24,7 @@ Official releases page:
 
 For new SuperADAM Nomad data, use `v1.1.0`.
 
-For older pre-Nomad reductions, use `v1.0.1` if you need exact continuity with the previous public release.
+For older pre-Nomad reductions, we also recommend the use of the new version which includes multiple fixes compared to the legacy code.
 
 ## 2. Available options
 
