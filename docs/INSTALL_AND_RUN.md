@@ -24,7 +24,7 @@ Official releases page:
 
 For new SuperADAM Nomad data, use `v1.1.0`.
 
-For older pre-Nomad reductions, we also recommend the use of the new version which includes multiple fixes compared to the legacy code.
+For older pre-Nomad reductions, both `v1.1.0` and `v1.0.1` and include multiple fixes compared to the legacy code from the original pySAred author. Yet, we always recommend the use of the latest release.
 
 ## 2. Available options
 
