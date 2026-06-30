@@ -173,7 +173,7 @@ Source-code files:
 
 The required Python packages are listed in:
 
-`requirements.txt`
+`requirements.txt, direct link: https://github.com/ehadden92/pySAred_EH/blob/main/requirements.txt)`
 
 The easiest recommended method is to use Anaconda or Miniconda.
 
